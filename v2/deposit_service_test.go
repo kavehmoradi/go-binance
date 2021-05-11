@@ -43,8 +43,7 @@ func (s *depositServiceTestSuite) TestListDeposits() {
 	defer s.assertDo()
 	s.assertReq(func(r *request) {
 		e := newSignedRequest().setParams(params{
-			"asset":     "BTC",
-			"status":    1,
+			"coin":      "BTC",
 			"startTime": 1508198532000,
 			"endTime":   1508198532001,
 		})
@@ -52,8 +51,7 @@ func (s *depositServiceTestSuite) TestListDeposits() {
 	})
 
 	deposits, err := s.client.NewListDepositsService().
-		Asset("BTC").
-		Status(1).
+		Coin("BTC").
 		StartTime(1508198532000).
 		EndTime(1508198532001).
 		Do(newContext())

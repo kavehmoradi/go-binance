@@ -10,21 +10,21 @@ import (
 // See https://binance-docs.github.io/apidocs/spot/en/#deposit-history-user_data
 type ListDepositsService struct {
 	c         *Client
-	asset     *string
-	status    *int
+	coin     *string
+	network    *string
 	startTime *int64
 	endTime   *int64
 }
 
-// Asset sets the asset parameter.
-func (s *ListDepositsService) Asset(asset string) *ListDepositsService {
-	s.asset = &asset
+// Coin sets the coin parameter.
+func (s *ListDepositsService) Coin(coin string) *ListDepositsService {
+	s.coin = &coin
 	return s
 }
 
-// Status sets the status parameter.
-func (s *ListDepositsService) Status(status int) *ListDepositsService {
-	s.status = &status
+// Network sets the network parameter.
+func (s *ListDepositsService) Network(network string) *ListDepositsService {
+	s.network = &network
 	return s
 }
 
@@ -46,14 +46,14 @@ func (s *ListDepositsService) EndTime(endTime int64) *ListDepositsService {
 func (s *ListDepositsService) Do(ctx context.Context) (deposits []*Deposit, err error) {
 	r := &request{
 		method:   "GET",
-		endpoint: "/wapi/v3/depositHistory.html",
+		endpoint: "/sapi/v1/capital/deposit/address",
 		secType:  secTypeSigned,
 	}
-	if s.asset != nil {
-		r.setParam("asset", *s.asset)
+	if s.coin != nil {
+		r.setParam("coin", *s.coin)
 	}
-	if s.status != nil {
-		r.setParam("status", *s.status)
+	if s.network != nil {
+		r.setParam("network", *s.network)
 	}
 	if s.startTime != nil {
 		r.setParam("startTime", *s.startTime)
