@@ -93,10 +93,9 @@ func (s *depositServiceTestSuite) assertDepositEqual(e, a *Deposit) {
 func (s *depositServiceTestSuite) TestGetDepositAddress() {
 	data := []byte(`
 	{
+		"coin": "ETH",
 		"address": "0xbf1f86b3c8ff4f8cbfc195e9713b6f0000000000",
-		"success": true,
-		"addressTag": "1231212",
-		"asset": "ETH",
+		"tag": "1231212",
 		"url": "https://etherscan.io/address/0xbf1f86b3c8ff4f8cbfc195e9713b6f0000000000"
 	}
 	`)
@@ -120,9 +119,8 @@ func (s *depositServiceTestSuite) TestGetDepositAddress() {
 
 	r := s.r()
 	r.NoError(err)
-	r.True(res.Success)
 	r.Equal("0xbf1f86b3c8ff4f8cbfc195e9713b6f0000000000", res.Address)
-	r.Equal("1231212", res.AddressTag)
-	r.Equal("ETH", res.Asset)
+	r.Equal("1231212", res.Tag)
+	r.Equal("ETH", res.Coin)
 	r.Equal("https://etherscan.io/address/0xbf1f86b3c8ff4f8cbfc195e9713b6f0000000000", res.URL)
 }
