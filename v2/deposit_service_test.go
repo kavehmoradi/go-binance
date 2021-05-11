@@ -43,7 +43,8 @@ func (s *depositServiceTestSuite) TestListDeposits() {
 	defer s.assertDo()
 	s.assertReq(func(r *request) {
 		e := newSignedRequest().setParams(params{
-			"coin":      "BTC",
+			"asset":     "BTC",
+			"status":    1,
 			"startTime": 1508198532000,
 			"endTime":   1508198532001,
 		})
@@ -51,7 +52,8 @@ func (s *depositServiceTestSuite) TestListDeposits() {
 	})
 
 	deposits, err := s.client.NewListDepositsService().
-		Coin("BTC").
+		Asset("BTC").
+		Status(1).
 		StartTime(1508198532000).
 		EndTime(1508198532001).
 		Do(newContext())
@@ -101,19 +103,19 @@ func (s *depositServiceTestSuite) TestGetDepositAddress() {
 	s.mockDo(data, nil)
 	defer s.assertDo()
 
-	asset := "ETH"
-	status := true
+	coin := "BTC"
+	network := "BTC"
 	s.assertReq(func(r *request) {
 		e := newSignedRequest().setParams(params{
-			"asset":  asset,
-			"status": status,
+			"coin":  coin,
+			"network": network,
 		})
 		s.assertRequestEqual(e, r)
 	})
 
 	res, err := s.client.NewGetDepositAddressService().
-		Asset(asset).
-		Status(status).
+		Coin(coin).
+		Network(network).
 		Do(newContext())
 
 	r := s.r()
